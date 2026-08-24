@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nano Relay Solutions — Beta Intake</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --lab-white:#F4F7F8;
+    --lab-panel:#FFFFFF;
+    --ink:#12181C;
+    --ink-soft:#5B6670;
+    --cyan:#0EA8A0;
+    --cyan-dim:#B7E4E1;
+    --violet:#6C63B5;
+    --line:#DDE3E6;
+    --warn-red:#B3261E;
+    --warn-red-dark:#8A1D17;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;background:var(--lab-white);color:var(--ink);
+    font-family:'Plus Jakarta Sans',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{margin:0;font-weight:700;letter-spacing:-0.01em;}
+  .mono{font-family:'Roboto Mono',monospace;letter-spacing:0.03em;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 30px;}
+  a{color:var(--cyan);}
+  :focus-visible{outline:2px solid var(--cyan);outline-offset:3px;}
+
+  .nav{position:sticky;top:0;z-index:50;background:rgba(244,247,248,0.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:16px 30px;max-width:920px;margin:0 auto;}
+  .back-link{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink-soft);font-size:0.86rem;font-weight:600;}
+  .back-link:hover{color:var(--cyan);}
+  .nav-badge{
+    font-family:'Roboto Mono',monospace;font-size:0.66rem;color:var(--violet);
+    border:1px solid var(--violet);padding:5px 10px;border-radius:4px;
+  }
+
+  header.intake-hero{padding:60px 0 40px;}
+  .eyebrow{font-family:'Roboto Mono',monospace;font-size:0.7rem;color:var(--violet);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px;}
+  header.intake-hero h1{font-size:clamp(2rem,5vw,2.8rem);line-height:1.1;}
+  header.intake-hero p{max-width:640px;margin-top:16px;color:var(--ink-soft);line-height:1.65;font-size:1rem;}
+
+  section{padding:36px 0;}
+  .section-title{font-size:1.3rem;margin-bottom:20px;}
+
+  /* ---------------- ACKNOWLEDGMENT LIST ---------------- */
+  .ack-list{display:flex;flex-direction:column;gap:12px;}
+  .ack-item{
+    display:flex;gap:14px;align-items:flex-start;
+    background:var(--lab-panel);border:1px solid var(--line);border-radius:8px;
+    padding:16px 18px;
+  }
+  .ack-item input{margin-top:3px;width:17px;height:17px;flex-shrink:0;}
+  .ack-item label{font-size:0.9rem;line-height:1.55;color:var(--ink);}
+  .ack-item .ack-tag{
+    display:block;font-family:'Roboto Mono',monospace;font-size:0.64rem;color:var(--violet);
+    margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em;
+  }
+
+  /* ---------------- WARNING BAR ---------------- */
+  .warning-block{
+    background:var(--warn-red);color:#fff;border-radius:10px;
+    padding:0;overflow:hidden;margin:36px 0;
+    border:2px solid var(--warn-red-dark);
+  }
+  .warning-head{
+    display:flex;align-items:center;gap:12px;
+    background:var(--warn-red-dark);padding:16px 24px;
+    font-family:'Roboto Mono',monospace;font-weight:700;letter-spacing:0.06em;font-size:0.95rem;
+  }
+  .warning-body{padding:24px 26px 28px;}
+  .warning-body p{margin:0 0 14px;line-height:1.65;font-size:0.92rem;}
+  .warning-body p:last-child{margin-bottom:0;}
+  .warning-body ul{margin:10px 0 14px;padding-left:20px;}
+  .warning-body li{margin-bottom:8px;line-height:1.55;font-size:0.9rem;}
+  .warning-body strong{font-weight:800;}
+
+  /* ---------------- FORM ---------------- */
+  .apply-panel{background:var(--lab-panel);border:1px solid var(--line);border-radius:12px;padding:36px;}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:22px;}
+  @media (max-width:640px){.form-grid{grid-template-columns:1fr;}}
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field.full{grid-column:1/-1;}
+  .field label{font-size:0.76rem;font-weight:600;color:var(--ink);}
+  .field input{
+    padding:11px 13px;border:1px solid var(--line);border-radius:6px;
+    font-family:'Plus Jakarta Sans',sans-serif;font-size:0.9rem;color:var(--ink);background:#fff;
+  }
+  .field input:focus{outline:2px solid var(--cyan);border-color:var(--cyan);}
+
+  .consent-row{
+    display:flex;align-items:flex-start;gap:12px;margin:26px 0;
+    padding:16px;background:var(--lab-white);border-radius:8px;border:1px solid var(--line);
+  }
+  .consent-row input{margin-top:3px;width:16px;height:16px;flex-shrink:0;}
+  .consent-row label{font-size:0.82rem;color:var(--ink-soft);line-height:1.5;}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:8px;
+    font-weight:700;font-size:0.92rem;text-decoration:none;cursor:pointer;border:none;
+    transition:transform 0.15s ease,opacity 0.15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--ink);color:#fff;}
+  #submit-btn{width:100%;justify-content:center;font-size:0.98rem;padding:15px;opacity:0.4;pointer-events:none;}
+  #submit-btn.enabled{opacity:1;pointer-events:auto;}
+
+  .confirm-msg{
+    display:none;margin-top:18px;padding:16px 18px;border-radius:8px;
+    background:rgba(14,168,160,0.08);border:1px solid var(--cyan-dim);
+    color:var(--ink);font-size:0.88rem;text-align:center;
+  }
+  .confirm-msg.show{display:block;}
+
+  footer{border-top:1px solid var(--line);padding:36px 0;text-align:center;}
+  footer p{color:var(--ink-soft);font-size:0.78rem;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="nano-relay-solutions.html" class="back-link">← Nano Relay Solutions</a>
+    <span class="nav-badge mono">BETA INTAKE — NOMINEES ONLY</span>
+  </div>
+</nav>
+
+<header class="intake-hero">
+  <div class="wrap">
+    <div class="eyebrow mono">Beta program intake</div>
+    <h1>Before we go any further.</h1>
+    <p>This page is for candidates who have already been nominated by an authorized clinical partner. Please review every acknowledgment and the warning notice below before completing your application.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2 class="section-title">Intake acknowledgments</h2>
+    <div class="ack-list">
+      <div class="ack-item">
+        <input type="checkbox" class="ack-check" id="ack-1">
+        <label for="ack-1"><span class="ack-tag">Screening</span>I have no objection to undergoing polygraph (lie detector) examination as part of the intake screening process.</label>
+      </div>
+      <div class="ack-item">
+        <input type="checkbox" class="ack-check" id="ack-2">
+        <label for="ack-2"><span class="ack-tag">Monitoring</span>I have no objection to physiological sensor monitoring — including cardiac, dermal, and neurological sensors — during intake and throughout beta participation.</label>
+      </div>
+      <div class="ack-item">
+        <input type="checkbox" class="ack-check" id="ack-3">
+        <label for="ack-3"><span class="ack-tag">Procedure</span>I have no objection to undergoing the surgical procedure required to implant the thirteen-point relay array.</label>
+      </div>
+      <div class="ack-item">
+        <input type="checkbox" class="ack-check" id="ack-4">
+        <label for="ack-4"><span class="ack-tag">Psychological</span>I am willing to complete a full psychological background evaluation and understand that all markers must be cleared prior to acceptance.</label>
+      </div>
+      <div class="ack-item">
+        <input type="checkbox" class="ack-check" id="ack-5">
+        <label for="ack-5"><span class="ack-tag">Physiological</span>I am willing to complete a physiological evaluation confirming stable neurochemistry prior to array activation.</label>
+      </div>
+    </div>
+
+    <div class="warning-block">
+      <div class="warning-head">⚠ WARNING — READ BEFORE PROCEEDING</div>
+      <div class="warning-body">
+        <p>All beta testers must be aware of the following before initiating a relay swap:</p>
+        <p>Once a swap has been <strong>initiated and consummated</strong> — meaning both paired participants are stably receiving one another's sensory and motor input — the timing of <strong>decoupling and differentiation</strong> is dependent on a number of physiological and neurological factors, and is not always predictable.</p>
+        <ul>
+          <li>Nano Relay Solutions does not recommend initiating a swap for a duration of <strong>less than twenty-four (24) hours</strong>.</li>
+          <li>Certain intense physiological or emotional events experienced during a swap — including but not limited to severe sneezing fits, powerful yawning, uncontrollable laughter (including tickling-induced), intense crying, prolonged hiccups, or sexual climax — can delay decoupling by an additional <strong>seventy-two (72) to ninety-six (96) hours</strong>.</li>
+          <li>Beta participants must be prepared to accommodate such delays before initiating any swap, and should plan accordingly.</li>
+        </ul>
+        <p>By proceeding with this application, you confirm that you have read and understood this notice.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2 class="section-title">Application</h2>
+    <div class="apply-panel">
+      <form id="apply-form">
+        <div class="form-grid">
+          <div class="field"><label for="f-name">Full legal name</label><input type="text" id="f-name" required></div>
+          <div class="field"><label for="f-pref">Preferred name</label><input type="text" id="f-pref"></div>
+          <div class="field"><label for="f-dob">Date of birth</label><input type="date" id="f-dob" required></div>
+          <div class="field"><label for="f-email">Email</label><input type="email" id="f-email" required></div>
+          <div class="field"><label for="f-phone">Phone</label><input type="tel" id="f-phone"></div>
+          <div class="field"><label for="f-addr">Current address</label><input type="text" id="f-addr"></div>
+          <div class="field"><label for="f-city">City / region</label><input type="text" id="f-city"></div>
+          <div class="field"><label for="f-nom">Nominating professional's name</label><input type="text" id="f-nom" required></div>
+          <div class="field full"><label for="f-code">Nomination reference code</label><input type="text" id="f-code" placeholder="e.g. NRS-2026-XXXX" required></div>
+        </div>
+
+        <div class="consent-row">
+          <input type="checkbox" id="f-consent">
+          <label for="f-consent">I have read and acknowledge all intake requirements and the warning notice above, and by submitting this form I agree to proceed with Nano Relay Solutions beta program intake.</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="submit-btn">Submit Application</button>
+        <div class="confirm-msg" id="confirm-msg">Application received. A Nano Relay coordinator will follow up with your nominating professional within 5 business days.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Nano Relay Solutions — Beta Program Intake</p>
+  </div>
+</footer>
+
+<script>
+  const consent = document.getElementById('f-consent');
+  const submitBtn = document.getElementById('submit-btn');
+  const ackChecks = Array.from(document.querySelectorAll('.ack-check'));
+
+  function refreshSubmitState() {
+    const allAcked = ackChecks.every((c) => c.checked);
+    submitBtn.classList.toggle('enabled', consent.checked && allAcked);
+  }
+  consent.addEventListener('change', refreshSubmitState);
+  ackChecks.forEach((c) => c.addEventListener('change', refreshSubmitState));
+
+  document.getElementById('apply-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!submitBtn.classList.contains('enabled')) return;
+
+    const form = e.target;
+    form.reset();
+    ackChecks.forEach((c) => (c.checked = false));
+    refreshSubmitState();
+
+    const msg = document.getElementById('confirm-msg');
+    msg.classList.add('show');
+    setTimeout(() => msg.classList.remove('show'), 3200);
+  });
+</script>
+
+</body>
+</html>
